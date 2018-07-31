@@ -1,0 +1,158 @@
+<div class="container">
+
+
+        <script type="text/javascript">
+
+                function picknumber(num){
+                        var pinc = document.getElementById('pinc');
+                        var pin_code = document.getElementById('pin_code');
+                        pin_code.value = pin_code.value + num;
+                        pinc.value = pinc.value + "*";
+
+                }
+
+                function resetnum(){
+                    var pinc = document.getElementById('pinc');
+                    var pin_code = document.getElementById('pin_code');
+                    pinc.value = '';
+                    pin_code.value = '';
+                }
+
+        </script>
+
+
+        <div class="col-sm-6 col-sm-offset-3">
+
+        
+
+        {{#if messages}}
+
+        <div class="row">
+
+            <div class="alert alert-danger">
+
+                    {{#each messages}}
+
+                        <p>{{this}}</p>
+
+                    {{/each}}
+
+            </div>
+
+        </div>
+
+
+        {{/if}}
+
+
+        <form action="/admin/login" method="POST"  class="form-horizontal" role="form">
+
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+              
+            <div class="form-group">
+                <legend>{{__ 'Login'}}</legend>
+            </div>
+
+
+
+
+            <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label for="email">{{__ 'Email Address'}}</label>
+                            <input type="text" name="email" class="form-control" placeholder="{{__ 'Please input email address'}}">
+                        </div>
+                    </div>
+            </div>
+
+            <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label for="password">{{__ 'Password'}}</label>
+                            <input type="password" name="password" class="form-control" placeholder="{{__ 'Please input password '}}">
+                        </div>
+                    </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+
+                   
+                        <label>Pin Code</label>
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                    <input type="text" disabled="disabled" class="form-control" id="pinc" name="pinc">
+                                    <input type="hidden" name="pin_code" id="pin_code">
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div id="vitualKeyboard">
+
+                                    <script type="text/javascript">
+
+                                            function shuffle(array){
+                                                var currentIndex= array.length,randomIndex,tempValue;
+
+                                                while(currentIndex!=0){
+                                                    randomIndex= Math.floor(Math.random()*currentIndex);
+                                                    currentIndex -=1;
+                                                    tempValue=array[currentIndex];
+                                                    array[currentIndex] = array[randomIndex];
+                                                    array[randomIndex] =tempValue;
+
+                                                }
+
+                                                return array;
+
+                                            }
+
+                                            var array = [0,1,2,3,4,5,6,7,8,9];
+
+                                            array = shuffle(array); 
+                                            var button = "";
+                                            for(var num in array){
+                                                  button+='<span onclick="picknumber('+array[num]+')" class="btn btn-default">'+array[num]+'</span>';      
+                                            }
+
+                                            button += '<span onclick="resetnum()" class="btn btn-default">Clear</span>'
+
+                                            document.getElementById('vitualKeyboard').innerHTML=button;
+
+
+                                    </script>
+
+                                </div>
+                            </div>
+
+                        </div>
+                  
+
+            </div>            
+
+            <div class="form-group">
+
+        
+               
+
+                    <button type="submit" class="btn btn-primary pull-right">{{__ 'Login'}}</button>
+
+                
+
+            </div>
+        
+        </form>
+
+
+
+
+</div>
+</div>
